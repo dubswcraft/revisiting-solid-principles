@@ -1,0 +1,88 @@
+The Single Responsibility Principle - A class should have one and only one reason to change
+A module should only have one reason to change
+	- Avoid side effects
+	- Minimise code touch points
+	- Increase re-usability
+
+trait UserService {
+	def changeEmail
+}
+
+class SettingsServiceUpdate extends UserService {
+	def changeEmail = checkAccess match  {
+		case Some(x) => // do something
+		case None => // do something else
+	}
+}
+
+The principle compensates for the anti-pattern where bloated classes play multiple roles
+
+As a result, object-oriented code typically contains many data structures with relatively few functions per data structure. Adding methods to a class exerts pressure on the single-responsibility principle and reducing the number of methods can either make the data structure difficult to compose or all together fruitless.
+
+SRP applies to functions, data structures, packages modules of functions
+
+Functional Programming - Given that a function has a single input and a single output, functions 
+naturally have a single responsibility.
+
+The Open Closed Principle - You should be able to extend a classes behaviour without modifying it
+The open/closed principle states that software entities should be open for extension, but closed for modification
+
+class EODProcessor {
+	val trades: List[Trade] = List(Trade("UBS", 3), Trade("BOA", 5), Trade("CITI", 4))
+	def checkProcessor = for (trade <- trades) 
+		if (trade.bankName == "UBS") processUbs 
+		else if (trade.bankName == "CITI")  processCiti
+		else processBoa
+
+	def processUbs = ???
+	def processBoa = ???
+	def processCiti = ???
+}
+
+trait Commission {
+	def process
+}
+class UbsCommission extends Commission {
+	def process = println("Processing Ubs trade")
+}
+class BoaCommission extends Commission {
+	def process = println("Processing Ubs trade")
+}
+class CitiCommission extends Commission {
+	def process = println("Processing Citi trade")
+}
+
+class EODProcessor {
+	case class Trade(commission: Commission, amount: BigDecimal)
+	val trades: List[Trade] = List(
+		Trade(new UbsTradeProcessor(), 3), 
+		Trade(new BoaTradeProcessor(), 5)
+	)
+	def checkProcessor = for (trade <- trades) trade.commission.process
+}
+
+type CommissionCalculator = (Int) => Int
+
+val citi:CommissionCalculator = _ * 0.15
+val boa:CommissionCalculator = _ * 0.2
+val ubs:CommissionCalculator = _ * 0.25
+
+List(
+	new EODProcessor(citi).process(10)
+	new EODProcessor(boa).process(10)
+	new EODProcessor(ubs).process(10)
+).map(_.process)
+
+class EODProcessor(calc: CommissionCalculator) {
+	def process(amount: BigDecimal) = calc(amount)
+}
+
+In a functional language, functions can be substituted at will and as such, there is no need to “design” for extensibility. Functionality requiring parametrization is naturally declared as such. Instead of inventing a concept of a virtual method and inheritance, one can rely on an existing, elementary concept - the higher-order function.
+
+Open closed
+
+The "OL" principles, Open/Closed and LSP, are more oriented towards languages based upon inheritance as a core software engineering concept. Functional languages values/modules do not have open recursion by default, so "implementation inheritance" is only used in very specific cases. Composition is preferred. I'm not sure how you should interpret the Open/Closed principle in that setting. You may consider it is about encapsulation, which functional programs also use a lot, using abstract types and such.
+
+The Liskov Substition Principle - Derived classes must substitute for their base classes
+The Dependency Inversion Principle - Depend on Abstractions not on concrete
+The Interface Segragation Priniple - Make fine grained interfaces that are client specific
