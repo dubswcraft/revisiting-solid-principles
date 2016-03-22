@@ -64,7 +64,6 @@
 							<li>Fragile - unable to identify the impact of the change</li>
 							<li>Immobile - no reusability</li>
 							<li>Viscous - Going with the flow of bad practices in the code</li>
-							<li></li>
 						</ul>
 					</p>
 				</section>
@@ -95,48 +94,94 @@
 
 				<!-- Example of nested vertical slides -->
 				<section>
-					<section>
 						<h2>SRP - The Single Responsibility Principle</h2>
 						<p>A module should only have one reason to change</p>
-							<li>Avoid side effects</li>
-							<li>Minimise code touch points</li>- 
-							<li>Increase re-usability</li> 
+							<ul>
+								<li>Avoid side effects</li>
+								<li>Minimise code touch points</li> 
+								<li>Increase re-usability</li> 
+							</ul>
 						</p>
-						<p>Use the <em>Space</em> key to navigate through all slides.</p>
-						<br>
-						<a href="#" class="navigate-down">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
+				</section>
+				<section>
+						<h2>Whats wrong with this?</h2>
+
+<pre style="background:#000;color:#f8f8f8"><span style="color:#e28964">case</span> <span style="color:#e28964">class</span> <span style="color:#89bdff">Trade</span>(<span style="color:#3e87e3">bankName</span>: <span style="color:#89bdff">String</span>, <span style="color:#3e87e3">amount</span>: <span style="color:#89bdff">BigDecimal</span>)
+
+<span style="color:#e28964">class</span> <span style="color:#89bdff">EODProcessor</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">process</span>(<span style="color:#3e87e3">trades</span>: <span style="color:#89bdff">Seq</span>[<span style="color:#89bdff">Trade</span>]) =
+    <span style="color:#e28964">for</span> (trade &lt;- trades)
+      <span style="color:#e28964">if</span> (trade.bankName == <span style="color:#65b042">"UBS"</span>) processUbsCommission(trade)
+      <span style="color:#e28964">else</span> <span style="color:#e28964">if</span> (trade.bankName == <span style="color:#65b042">"CITI"</span>)  processCitiCommission(trade)
+      <span style="color:#e28964">else</span> processBoaCommission(trade)
+
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">processUbsCommission</span>(<span style="color:#3e87e3">trade</span>: <span style="color:#89bdff">Trade</span>) = println(trade.amount * <span style="color:#3387cc">0.25</span>)
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">processBoaCommission</span>(<span style="color:#3e87e3">trade</span>: <span style="color:#89bdff">Trade</span>) = println(trade.amount * <span style="color:#3387cc">0.15</span>)
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">processCitiCommission</span>(<span style="color:#3e87e3">trade</span>: <span style="color:#89bdff">Trade</span>) = println(trade.amount * <span style="color:#3387cc">0.10</span>)
+}
+
+<span style="color:#e28964">val</span> <span style="color:#89bdff">trades</span>: <span style="color:#89bdff">List</span>[<span style="color:#89bdff">Trade</span>] = <span style="color:#89bdff">List</span>(
+  <span style="color:#89bdff">Trade</span>(<span style="color:#65b042">"UBS"</span>, <span style="color:#3387cc">1000</span>),
+  <span style="color:#89bdff">Trade</span>(<span style="color:#65b042">"BOA"</span>, <span style="color:#3387cc">300</span>),
+  <span style="color:#89bdff">Trade</span>(<span style="color:#65b042">"CITI"</span>, <span style="color:#3387cc">1001</span>))
+
+<span style="color:#e28964">new</span> <span style="color:#89bdff">EODProcessor</span>().process(trades)
+
+</pre>					</section>
 					<section>
-						<h2>Basement Level 1</h2>
-						<p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>That's it, time to go back up.</p>
-						<br>
-						<a href="#/2">
-							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="transform: rotate(180deg); -webkit-transform: rotate(180deg);">
-						</a>
-					</section>
+						<h2>Open Closed Applied</h2>
+<pre style="background:#000;color:#f8f8f8"><span style="color:#e28964">trait</span> <span style="color:#89bdff">Commission</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">process</span>
+}
+<span style="color:#e28964">class</span> <span style="color:#89bdff">UbsCommission</span>(<span style="color:#3e87e3">amount</span>: <span style="color:#89bdff">BigDecimal</span>) <span style="color:#e28964">extends</span> <span style="color:#9b5c2e;font-style:italic">Commission</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">process</span> = println(amount * <span style="color:#3387cc">0.25</span>)
+}
+<span style="color:#e28964">class</span> <span style="color:#89bdff">BoaCommission</span>(<span style="color:#3e87e3">amount</span>: <span style="color:#89bdff">BigDecimal</span>) <span style="color:#e28964">extends</span> <span style="color:#9b5c2e;font-style:italic">Commission</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">process</span> = println(amount * <span style="color:#3387cc">0.15</span>)
+}
+<span style="color:#e28964">class</span> <span style="color:#89bdff">CitiCommission</span>(<span style="color:#3e87e3">amount</span>: <span style="color:#89bdff">BigDecimal</span>) <span style="color:#e28964">extends</span> <span style="color:#9b5c2e;font-style:italic">Commission</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">process</span> = println(amount * <span style="color:#3387cc">0.10</span>)
+}
+<span style="color:#e28964">case</span> <span style="color:#e28964">class</span> <span style="color:#89bdff">Trade</span>(<span style="color:#3e87e3">commission</span>: <span style="color:#89bdff">Commission</span>)
+<span style="color:#e28964">class</span> <span style="color:#89bdff">EODProcessorOpenClosed</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">process</span>(<span style="color:#3e87e3">trades</span>: <span style="color:#89bdff">Seq</span>[<span style="color:#89bdff">Trade</span>]) =
+    <span style="color:#e28964">for</span> (trade &lt;- trades)
+      trade.commission.process
+}
+<span style="color:#e28964">val</span> <span style="color:#89bdff">trades</span>: <span style="color:#89bdff">List</span>[<span style="color:#89bdff">Trade</span>] = <span style="color:#89bdff">List</span>(
+  <span style="color:#89bdff">Trade</span>(<span style="color:#e28964">new</span> <span style="color:#89bdff">UbsCommission</span>(<span style="color:#3387cc">1000</span>)),
+  <span style="color:#89bdff">Trade</span>(<span style="color:#e28964">new</span> <span style="color:#89bdff">BoaCommission</span>(<span style="color:#3387cc">300</span>)),
+  <span style="color:#89bdff">Trade</span>(<span style="color:#e28964">new</span> <span style="color:#89bdff">CitiCommission</span>(<span style="color:#3387cc">100</span>))
+)
+<span style="color:#e28964">new</span> <span style="color:#89bdff">EODProcessorOpenClosed</span>().process(trades)
+
+</pre></section>
+				<section>
+					<h2>This necessary in FP?</h2>
+					<p>
+						In a functional language, functions can be substituted at will and as such, there is no need to “design” for extensibility. 
+					</p>
 				</section>
 
 				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? Not a problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slides.com" target="_blank">http://slides.com</a>.
-					</p>
-				</section>
+					<h2>Functional Approach</h2>
+<pre style="background:#000;color:#f8f8f8"><span style="color:#e28964">type</span> <span style="text-decoration:underline">CommissionCalculator</span> = (<span style="color:#99cf50">Int</span>) => <span style="color:#89bdff">BigDecimal</span>
 
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
+<span style="color:#e28964">val</span> <span style="color:#89bdff">citi</span>:<span style="color:#89bdff">CommissionCalculator</span> = _ * <span style="color:#3387cc">0.15</span>
+<span style="color:#e28964">val</span> <span style="color:#89bdff">boa</span>:<span style="color:#89bdff">CommissionCalculator</span> = _ * <span style="color:#3387cc">0.2</span>
+<span style="color:#e28964">val</span> <span style="color:#89bdff">ubs</span>:<span style="color:#89bdff">CommissionCalculator</span> = _ * <span style="color:#3387cc">0.25</span>
+
+<span style="color:#e28964">class</span> <span style="color:#89bdff">EODProcessorFP</span>(<span style="color:#3e87e3">calc</span>: <span style="color:#89bdff">CommissionCalculator</span>) {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">process</span>(<span style="color:#3e87e3">amount</span>: <span style="color:#89bdff">Int</span>) = calc(amount)
+}
+
+<span style="color:#89bdff">List</span>(
+  <span style="color:#e28964">new</span> <span style="color:#89bdff">EODProcessorFP</span>(citi),
+  <span style="color:#e28964">new</span> <span style="color:#89bdff">EODProcessorFP</span>(boa),
+  <span style="color:#e28964">new</span> <span style="color:#89bdff">EODProcessorFP</span>(ubs)
+).map(_.process(<span style="color:#3387cc">100</span>)).mkString(<span style="color:#65b042">","</span>)
+
+</pre>					
 				</section>
 
 				<section>

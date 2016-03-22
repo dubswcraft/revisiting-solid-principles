@@ -27,7 +27,10 @@ naturally have a single responsibility.
 The Open Closed Principle - You should be able to extend a classes behaviour without modifying it
 The open/closed principle states that software entities should be open for extension, but closed for modification
 
+case class Trade(bankName: String, amount: BigDecimal)
+
 class EODProcessor {
+
 	val trades: List[Trade] = List(Trade("UBS", 3), Trade("BOA", 5), Trade("CITI", 4))
 	def checkProcessor = for (trade <- trades) 
 		if (trade.bankName == "UBS") processUbs 
