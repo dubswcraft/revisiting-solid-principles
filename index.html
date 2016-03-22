@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>reveal.js – The HTML Presentation Framework</title>
+		<title>SOLID principles with Scala</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
@@ -41,25 +41,67 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Reveal.js</h1>
-					<h3>The HTML Presentation Framework</h3>
+					<h2>Revisiting the Solid Principles with functional languages</h2>
 					<p>
-						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
+						<small>By Paul Kelly</small>
 					</p>
 				</section>
 
 				<section>
-					<h2>Hello There</h2>
+					<h2>What are the SOLID principles?</h2>
 					<p>
-						reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do.
+						They are five basic principles of object oriented programming and design.
+
+						When applied together intend to make it more likely that a programmer will create a system that is easier to maintain over time.	
+					</p>
+				</section>
+
+				<section>
+					<h2>What are the problems?</h2>
+					<p>
+						<ul>
+							<li>Rigid - difficult to add new features</li>
+							<li>Fragile - unable to identify the impact of the change</li>
+							<li>Immobile - no reusability</li>
+							<li>Viscous - Going with the flow of bad practices in the code</li>
+							<li></li>
+						</ul>
+					</p>
+				</section>
+
+				<section>
+					<h2>What are the solutions?</h2>
+					<p>
+						<ul>
+							<li><b>Loosely coupled</b> - shouldn't be too much dependency between the modules, if there is, it should be via an interface and should be minimal</li>
+							<li><b>Cohesive code</b> - Code has to be very specific in it's operations</li>
+							<li><b>DRY</b> - Don't repeat yourself</li>
+						</ul>
+					</p>
+				</section>
+
+				<section>
+					<h2>The five SOLID principles</h2>
+					<p>
+						<ul>
+							<li><b>SRP - The Single Responsibility Principle</b> - A class should have one and only one reason to change</li>
+							<li><b>OCP - The Open/Closed Principle</b> - You should be able to extend a classes behaviour without modifying it</li>
+							<li><b>LSP - The Liskov Substitution Principle</b> - Derived classes should be substitutable for their base classes</li>
+							<li><b>DIP - The Dependency Inversion Principle</b> - Depend on abstractions not on concretions</li>
+							<li><b>ISP</b> - The Interface Segregation Principle</li> - Make fine grained interfaces that are client specific
+						</ul>
 					</p>
 				</section>
 
 				<!-- Example of nested vertical slides -->
 				<section>
 					<section>
-						<h2>Vertical Slides</h2>
-						<p>Slides can be nested inside of each other.</p>
+						<h2>SRP - The Single Responsibility Principle</h2>
+						<p>A module should only have one reason to change</p>
+							<li>Avoid side effects</li>
+							<li>Minimise code touch points</li>- 
+							<li>Increase re-usability</li> 
+						</p>
 						<p>Use the <em>Space</em> key to navigate through all slides.</p>
 						<br>
 						<a href="#" class="navigate-down">
