@@ -214,9 +214,12 @@
 
 </pre></section>
 				<section>
-					<h2>Too much boilerplate?</h2>
+					<h2>Too much boilerplate? What about FP?</h2>
 					<p>
-						In a functional language, functions can be substituted at will and as such, there is no need to “design” for extensibility. 
+						In a functional language, functions can be substituted at will and as such, there is no need to “design” for extensibility.
+					</p>
+					<p>
+					  The open closed principal is geared towards languages where inheritance is a core concept, inheritance and polymorphism are not strongly used in F#, so this principle is very weak here.
 					</p>
 				</section>
 
@@ -288,22 +291,16 @@
 				<section>
 					Code snippet of dependency inversion.. todo..
 				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
+				<section>
+					<h2>Summary</h2>
 
-						Write content using inline or external Markdown.
-						Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-
-						```
-						<section data-markdown>
-						  ## Markdown support
-
-						  Write content using inline or external Markdown.
-						  Instructions and more info available in the [readme](https://github.com/hakimel/reveal.js#markdown).
-						</section>
-						```
-					</script>
+					<p>So we can assume that in FP</p>
+					<li>Types should have only a single responsibility.</li>
+					<li>The open closed principle doesn’t apply in the majority of cases unless we are using an object-oriented approach.  With functional programming we favour functional composition and type augmentation.</li>
+					<li>The same can be said of the Liskov substitute principle, pure functions uphold this tenant via immutability and referential transparency.</li>
+					<li>Interface segregation also applies and idiomatic F#  produces small concise functions with modular interfaces with a separation of concerns.</li>
+					<li>Dependency inversion is not a relevant issue for F# as the language itself supports higher-order-functions to encapsulate this concept. </li>
+					<p>So only the ’S’ and the ’I’ parts are relevant in functional programming.  </p>
 				</section>
 
 				<section>
