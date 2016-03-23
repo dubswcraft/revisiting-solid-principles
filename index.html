@@ -83,7 +83,6 @@
 				</section>
 				<section>
 						<h2>Consider the following example</h2>
-						<p>
 <pre style="background:#000;color:#f8f8f8"><span style="color:#e28964">class</span> <span style="color:#89bdff">Book</span> {
   <span style="color:#e28964">def</span> <span style="color:#89bdff">title</span> = <span style="color:#65b042">"A Great Book"</span>
   <span style="color:#e28964">def</span> <span style="color:#89bdff">author</span> = <span style="color:#65b042">"John Doe"</span>
@@ -93,28 +92,28 @@
 }
 
 </pre>
-						</p>
-						<p>
-							One clue to find our reasons for change is to analyze the audience for our class
-							In the example above, who is the audience? Possibly a Librarian and Printer/Graphic Designer
-						</p>
-						<br>
-						<p>Either way, mixing presentation logic with business logic is bad!</p>
+						<ul>
+							<li>One clue to find our reasons for change is to analyze the audience for our class
+							In the example above, who is the audience? Possibly a Librarian and Printer/Graphic Designer</li>
+							<li>Either way, mixing presentation logic with business logic is bad!</p></li>
+						</ul>
 				</section>
 				
 				<section>
 					<h2>Does this principle hold true in FP?</h2>
-					<p>In functional programming, the fundamental unit of abstraction is the function which has a single purpose</p>
-					<p>Given that a function has a single input and a single output, functions naturally have a single responsibility
-					</p>
-					<p>So the single responsibility rule holds strong here</p>
+					<ul>
+						<li>In functional programming, the fundamental unit of abstraction is the function which has a single purpose</li>
+						<li>Given that a function has a single input and a single output, functions naturally have a single responsibility</li>
+						<li>So the single responsibility rule holds strong here</li>
+					</ul>
 				</section>
 
 				<section>
 						<h2>OCP - The Open/Closed Principle</h2>
-						<p>A module should only have one reason to change</p>
-						<p>It states that software entities should be open for extension, but closed for modification</p>
-						</p>
+						<ul>
+							<li>A module should only have one reason to change</li>
+							<li>It states that software entities should be open for extension, but closed for modification</li>
+						</ul>
 				</section>
 				<section>
 						<h2>Whats wrong with this?</h2>
@@ -172,8 +171,8 @@
 				<section>
 					<h2>Too much boilerplate? What about FP?</h2>
 					<ul>
-						<li>In a functional language, functions can be substituted at will and as such, there is no need to “design” for extensibility.</li>
-						<li>The open closed principal is geared towards languages where inheritance is a core concept, inheritance and polymorphism are not strongly used in F#, so this principle is very weak here.</li>
+						<li>In FP, functions can be substituted at will and as such, there is no need to “design” for extensibility.</li>
+						<li>The open closed principal is geared towards languages where inheritance is a core concept, inheritance and polymorphism are not strongly used in FP, so this principle is very weak here.</li>
 					</ul>
 				</section>
 				<section>
