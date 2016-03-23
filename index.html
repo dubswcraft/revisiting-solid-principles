@@ -95,12 +95,69 @@
 				<!-- Example of nested vertical slides -->
 				<section>
 						<h2>SRP - The Single Responsibility Principle</h2>
+						<p>The principle compensates for the anti-pattern where bloated classes play multiple roles</p>
+						<p>Gather together the things that change for the same reasons. Separate those things that change for different reasons.</p>
+						<p>This looks like another way to define cohesion and coupling. And it is. We want to increase the cohesion between things that change for the same reasons, and we want to decrease the coupling between those things that change for different reasons.
+						</p>
+				</section>
+				<section>
+						<h2>Consider the following example</h2>
+						<p>
+<pre style="background:#000;color:#f8f8f8"><span style="color:#e28964">class</span> <span style="color:#89bdff">Book</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">title</span> = <span style="color:#65b042">"A Great Book"</span>
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">author</span> = <span style="color:#65b042">"John Doe"</span>
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">turnPage</span> = ??? <span style="color:#aeaeae;font-style:italic">// pointer to next page</span>
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">printCurrentPage</span> =
+    println(<span style="color:#65b042">"current page content"</span>)
+}
+
+</pre>
+						</p>
+						<p>
+							One clue to find our reasons for change is to analyze the audience for our class
+							In the example above, who is the audience? Possibly a Librarian and Printer/Graphic Designer
+						</p>
+						<br>
+						<p>Either way, mixing presentation logic with business logic is bad!</p>
+				</section>
+
+				<section>
+						<h2>We can do better..</h2>
+
+<pre style="background:#000;color:#f8f8f8"><span style="color:#e28964">class</span> <span style="color:#89bdff">Book</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">title</span> = <span style="color:#65b042">"A Great Book"</span>
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">author</span> = <span style="color:#65b042">"John Doe"</span>
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">turnPage</span> = ??? <span style="color:#aeaeae;font-style:italic">// pointer to next page</span>
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">pageContent</span> = <span style="color:#65b042">"current page content"</span>
+}
+<span style="color:#e28964">trait</span> <span style="color:#89bdff">Printer</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">printCurrentPage</span>(<span style="color:#3e87e3">pageContent</span>: <span style="color:#89bdff">String</span>)
+}
+<span style="color:#e28964">trait</span> <span style="color:#89bdff">PlainTextPrinter</span> <span style="color:#e28964">extends</span> <span style="color:#9b5c2e;font-style:italic">Printer</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">printCurrentPage</span>(<span style="color:#3e87e3">pageContent</span>: <span style="color:#89bdff">String</span>) =  
+    println(pageContent)
+}
+
+<span style="color:#e28964">trait</span> <span style="color:#89bdff">HtmlTextPrinter</span> <span style="color:#e28964">extends</span> <span style="color:#9b5c2e;font-style:italic">Printer</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">printCurrentPage</span>(<span style="color:#3e87e3">pageContent</span>: <span style="color:#89bdff">String</span>) = 
+    println(s<span style="color:#65b042">"&lt;div>$pageContent&lt;/div>"</span>)
+}
+
+<span style="color:#e28964">val</span> <span style="color:#89bdff">htmlBook</span> = <span style="color:#e28964">new</span> <span style="color:#89bdff">Book</span> <span style="color:#e28964">with</span> <span style="color:#9b5c2e;font-style:italic">HtmlTextPrinter</span>
+
+</pre>
+				</section>
+				
+				<section>
+				<h2>What about SRP in Functional Languages?</h2>
+				<p>In functional programming, the fundamental unit of abstraction is the function</p>
+				<p>Given that a function has a single input and a single output, functions naturally have a single responsibility</p>
+				</section>
+
+				<section>
+						<h2>OCP - The Open/Closed Principle</h2>
 						<p>A module should only have one reason to change</p>
-							<ul>
-								<li>Avoid side effects</li>
-								<li>Minimise code touch points</li> 
-								<li>Increase re-usability</li> 
-							</ul>
+						<p>It states that software entities should be open for extension, but closed for modification</p>
 						</p>
 				</section>
 				<section>
@@ -157,7 +214,7 @@
 
 </pre></section>
 				<section>
-					<h2>This necessary in FP?</h2>
+					<h2>Too much boilerplate?</h2>
 					<p>
 						In a functional language, functions can be substituted at will and as such, there is no need to “design” for extensibility. 
 					</p>
@@ -185,12 +242,52 @@
 				</section>
 
 				<section>
-					<h2>Touch Optimized</h2>
+					<h2>ISP - Liskov Substitution Principle</h2>
 					<p>
-						Presentations look great on touch devices, like mobile phones and tablets. Simply swipe through your slides.
+						Subclasses should be substitutable for their base classes
+					</p>
+					<p>
+						The derived methods should expect no more and provide no less, they should behave like it's parent
+					</p>
+				</section>
+				<section>
+					<h2>What does this mean in FP?</h2>
+					<p>
+					<ul>
+						<li>The LSP is all about inheritance which dosen't hold much relevance in functional languages.</li>
+						<li>The LSP is enforced by the language already, so the principle holds true but is of less relevance in the day to day work of functional programmers</li>
+						<li>The idioms in the language like referential transparency lean strongly towards enforcing this principle.</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Interface Segregation Principle</h2>
+					<p>The dependency of one class to another one should depend on the smallest possible interface</p>
+					<p>The notion that “many client specific interfaces are better than one general purpose interface"</p>
+				</section>
+
+				<section>
+					<h2>What does this mean in FP?</h2>
+					<p>
+						If you are violating single responsibility then your interface will probably be bloated too with unnecessary properties and methods.  The same rule applies to FP, keep your interfaces modular and keep indifferent concepts separated.
 					</p>
 				</section>
 
+				<section>
+					<h2>Dependency Inversion Principle</h2>
+					<p>Abtractions should <b>not</b> depend on details, details <b>should</b> depend on abstractions</p>
+					<p>Inversion of Control/Dependency Injection is an implementation of DIP</p>
+					<p> Dependency inversion is often solved with concepts such as dependency injection; common techniques for this involves things like constructor injection and interface injection.<p>
+					<p> Inversion of control is often solved with a factory pattern or a service locator.  
+				</section>
+				<section>
+					<h2>How does this apply for FP</h2>
+					<p> From a functional point of view, these containers and injection concepts can be solved with a simple higher order function, or hole-in-the-middle type pattern which are built right into the language.
+					<p>Becomes less relevant for FP as we can pass higher order functions to achieve the same behaviour</p>
+				</section>
+				<section>
+					Code snippet of dependency inversion.. todo..
+				</section>
 				<section data-markdown>
 					<script type="text/template">
 						## Markdown support
