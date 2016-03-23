@@ -57,18 +57,6 @@
 				</section>
 
 				<section>
-					<h2>What are the problems?</h2>
-					<p>
-						<ul>
-							<li>Rigid - difficult to add new features</li>
-							<li>Fragile - unable to identify the impact of the change</li>
-							<li>Immobile - no reusability</li>
-							<li>Viscous - Going with the flow of bad practices in the code</li>
-						</ul>
-					</p>
-				</section>
-
-				<section>
 					<h2>What are the solutions?</h2>
 					<p>
 						<ul>
@@ -92,6 +80,10 @@
 					</p>
 				</section>
 
+				<section>
+					<h2>Are these relevant in FP?</h2>
+					<p>Lets's explore..</p>
+				</section>
 				<!-- Example of nested vertical slides -->
 				<section>
 						<h2>SRP - The Single Responsibility Principle</h2>
@@ -120,38 +112,13 @@
 						<br>
 						<p>Either way, mixing presentation logic with business logic is bad!</p>
 				</section>
-
-				<section>
-						<h2>We can do better..</h2>
-
-<pre style="background:#000;color:#f8f8f8"><span style="color:#e28964">class</span> <span style="color:#89bdff">Book</span> {
-  <span style="color:#e28964">def</span> <span style="color:#89bdff">title</span> = <span style="color:#65b042">"A Great Book"</span>
-  <span style="color:#e28964">def</span> <span style="color:#89bdff">author</span> = <span style="color:#65b042">"John Doe"</span>
-  <span style="color:#e28964">def</span> <span style="color:#89bdff">turnPage</span> = ??? <span style="color:#aeaeae;font-style:italic">// pointer to next page</span>
-  <span style="color:#e28964">def</span> <span style="color:#89bdff">pageContent</span> = <span style="color:#65b042">"current page content"</span>
-}
-<span style="color:#e28964">trait</span> <span style="color:#89bdff">Printer</span> {
-  <span style="color:#e28964">def</span> <span style="color:#89bdff">printCurrentPage</span>(<span style="color:#3e87e3">pageContent</span>: <span style="color:#89bdff">String</span>)
-}
-<span style="color:#e28964">trait</span> <span style="color:#89bdff">PlainTextPrinter</span> <span style="color:#e28964">extends</span> <span style="color:#9b5c2e;font-style:italic">Printer</span> {
-  <span style="color:#e28964">def</span> <span style="color:#89bdff">printCurrentPage</span>(<span style="color:#3e87e3">pageContent</span>: <span style="color:#89bdff">String</span>) =  
-    println(pageContent)
-}
-
-<span style="color:#e28964">trait</span> <span style="color:#89bdff">HtmlTextPrinter</span> <span style="color:#e28964">extends</span> <span style="color:#9b5c2e;font-style:italic">Printer</span> {
-  <span style="color:#e28964">def</span> <span style="color:#89bdff">printCurrentPage</span>(<span style="color:#3e87e3">pageContent</span>: <span style="color:#89bdff">String</span>) = 
-    println(s<span style="color:#65b042">"&lt;div>$pageContent&lt;/div>"</span>)
-}
-
-<span style="color:#e28964">val</span> <span style="color:#89bdff">htmlBook</span> = <span style="color:#e28964">new</span> <span style="color:#89bdff">Book</span> <span style="color:#e28964">with</span> <span style="color:#9b5c2e;font-style:italic">HtmlTextPrinter</span>
-
-</pre>
-				</section>
 				
 				<section>
-				<h2>What about SRP in Functional Languages?</h2>
-				<p>In functional programming, the fundamental unit of abstraction is the function</p>
-				<p>Given that a function has a single input and a single output, functions naturally have a single responsibility</p>
+					<h2>Does this principle hold true in FP?</h2>
+					<p>In functional programming, the fundamental unit of abstraction is the function which has a single purpose</p>
+					<p>Given that a function has a single input and a single output, functions naturally have a single responsibility
+					</p>
+					<p>So the single responsibility rule holds strong here</p>
 				</section>
 
 				<section>
@@ -215,14 +182,11 @@
 </pre></section>
 				<section>
 					<h2>Too much boilerplate? What about FP?</h2>
-					<p>
-						In a functional language, functions can be substituted at will and as such, there is no need to “design” for extensibility.
-					</p>
-					<p>
-					  The open closed principal is geared towards languages where inheritance is a core concept, inheritance and polymorphism are not strongly used in F#, so this principle is very weak here.
-					</p>
+					<ul>
+						<li>In a functional language, functions can be substituted at will and as such, there is no need to “design” for extensibility.</li>
+						<li>The open closed principal is geared towards languages where inheritance is a core concept, inheritance and polymorphism are not strongly used in F#, so this principle is very weak here.</li>
+					</ul>
 				</section>
-
 				<section>
 					<h2>Functional Approach</h2>
 <pre style="background:#000;color:#f8f8f8"><span style="color:#e28964">type</span> <span style="text-decoration:underline">CommissionCalculator</span> = (<span style="color:#99cf50">Int</span>) => <span style="color:#89bdff">BigDecimal</span>
@@ -247,10 +211,7 @@
 				<section>
 					<h2>ISP - Liskov Substitution Principle</h2>
 					<p>
-						Subclasses should be substitutable for their base classes
-					</p>
-					<p>
-						The derived methods should expect no more and provide no less, they should behave like it's parent
+						Liskov substitution states “objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program”
 					</p>
 				</section>
 				<section>
@@ -258,38 +219,78 @@
 					<p>
 					<ul>
 						<li>The LSP is all about inheritance which dosen't hold much relevance in functional languages.</li>
-						<li>The LSP is enforced by the language already, so the principle holds true but is of less relevance in the day to day work of functional programmers</li>
 						<li>The idioms in the language like referential transparency lean strongly towards enforcing this principle.</li>
 					</ul>
 				</section>
 
 				<section>
 					<h2>Interface Segregation Principle</h2>
-					<p>The dependency of one class to another one should depend on the smallest possible interface</p>
-					<p>The notion that “many client specific interfaces are better than one general purpose interface"</p>
+					<ul>
+						<li>The dependency of one class to another one should depend on the smallest possible interface</li>
+						<li>The notion that “many client specific interfaces are better than one general purpose interface"</li>
+					</ul>
 				</section>
 
 				<section>
 					<h2>What does this mean in FP?</h2>
-					<p>
-						If you are violating single responsibility then your interface will probably be bloated too with unnecessary properties and methods.  The same rule applies to FP, keep your interfaces modular and keep indifferent concepts separated.
-					</p>
+						<ul>
+							<li>If you are violating single responsibility then your interface will probably be bloated too with qunnecessary properties and methods.  </li>
+							<li>The same rule applies to FP, keep your interfaces modular and keep indifferent concepts separated.</li>
+						</ul>
 				</section>
-
 				<section>
 					<h2>Dependency Inversion Principle</h2>
-					<p>Abtractions should <b>not</b> depend on details, details <b>should</b> depend on abstractions</p>
-					<p>Inversion of Control/Dependency Injection is an implementation of DIP</p>
-					<p> Dependency inversion is often solved with concepts such as dependency injection; common techniques for this involves things like constructor injection and interface injection.<p>
-					<p> Inversion of control is often solved with a factory pattern or a service locator.  
+					<ul>
+						<li>Abtractions should <b>not</b> depend on details, details <b>should</b> depend on abstractions</li>
+						<li>Inversion of Control/Dependency Injection is an implementation of DIP</li>
+						<li>Dependency inversion is often solved with concepts such as dependency injection; common techniques for this involves things like constructor injection and interface injection.</li>
+						<li>Inversion of control is often solved with a factory pattern or a service locator.</li>
+					</ul>
 				</section>
 				<section>
 					<h2>How does this apply for FP</h2>
-					<p> From a functional point of view, these containers and injection concepts can be solved with a simple higher order function, or hole-in-the-middle type pattern which are built right into the language.
-					<p>Becomes less relevant for FP as we can pass higher order functions to achieve the same behaviour</p>
+					<ul>
+						<li>Languages that support higher language functions can often solve simple dependency inversion problems by passing behaviour as a function instead of an object which implements an interface in the OO-sense</li>
+						<li>So becomes less relevant for FP as we can pass higher order functions to achieve the same behaviour</li>
+					</ul>
 				</section>
 				<section>
-					Code snippet of dependency inversion.. todo..
+					<h2>How would this look in OOP?</h2>
+
+<pre style="background:#000;color:#f8f8f8"><span style="color:#e28964">case</span> <span style="color:#e28964">class</span> <span style="color:#89bdff">Customer</span>(<span style="color:#3e87e3">name</span>: <span style="color:#89bdff">String</span>, <span style="color:#3e87e3">age</span>: <span style="color:#89bdff">Int</span>)
+<span style="color:#e28964">trait</span> <span style="color:#89bdff">Filter</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">matches</span>(<span style="color:#3e87e3">customer</span>: <span style="color:#89bdff">Customer</span>)
+}
+<span style="color:#e28964">class</span> <span style="color:#89bdff">NameFilter</span>(<span style="color:#3e87e3">name</span>: <span style="color:#89bdff">String</span>) <span style="color:#e28964">extends</span> <span style="color:#9b5c2e;font-style:italic">Filter</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">matches</span>(<span style="color:#3e87e3">customer</span>: <span style="color:#89bdff">Customer</span>) = customer.name == name
+}
+<span style="color:#e28964">class</span> <span style="color:#89bdff">AgeFilter</span>(<span style="color:#3e87e3">age</span>: <span style="color:#89bdff">Int</span>) <span style="color:#e28964">extends</span> <span style="color:#9b5c2e;font-style:italic">Filter</span> {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">matches</span>(<span style="color:#3e87e3">customer</span>: <span style="color:#89bdff">Customer</span>) = customer.age == age
+}
+<span style="color:#e28964">class</span> <span style="color:#89bdff">FilterCustomers</span>(<span style="color:#3e87e3">filter</span>: <span style="color:#89bdff">Filter</span>, <span style="color:#3e87e3">customers</span>: <span style="color:#89bdff">List</span>[<span style="color:#89bdff">Customer</span>]) {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">filter</span> = customers.filter(filter)
+}
+
+<span style="color:#e28964">val</span> <span style="color:#89bdff">customers</span> = <span style="color:#89bdff">List</span>(<span style="color:#89bdff">Customer</span>(<span style="color:#65b042">"paul"</span>, <span style="color:#3387cc">10</span>), <span style="color:#89bdff">Customer</span>(<span style="color:#65b042">"john"</span>, <span style="color:#3387cc">20</span>))
+<span style="color:#e28964">val</span> <span style="color:#89bdff">nameFilter</span> = <span style="color:#e28964">new</span> <span style="color:#89bdff">FilterCustomers</span>(
+  <span style="color:#e28964">new</span> <span style="color:#89bdff">NameFilter</span>(<span style="color:#65b042">"paul"</span>), customers
+)
+
+<span style="color:#aeaeae;font-style:italic">// run using </span>
+nameFilter.filter
+
+</pre>
+				</section>
+				<section>
+					<h2>And in FP?</h2>
+<pre style="background:#000;color:#f8f8f8"><span style="color:#e28964">val</span> <span style="color:#89bdff">customers</span> = <span style="color:#89bdff">List</span>(<span style="color:#89bdff">Customer</span>(<span style="color:#65b042">"paul"</span>, <span style="color:#3387cc">10</span>), <span style="color:#89bdff">Customer</span>(<span style="color:#65b042">"john"</span>, <span style="color:#3387cc">20</span>))
+<span style="color:#e28964">class</span> <span style="color:#89bdff">FilterCustomer</span>(<span style="color:#3e87e3">customers</span>: <span style="color:#89bdff">Seq</span>[<span style="color:#89bdff">Customer</span>]) {
+  <span style="color:#e28964">def</span> <span style="color:#89bdff">filter</span>(<span style="color:#3e87e3">f</span>: <span style="color:#89bdff">Customer</span> => <span style="color:#99cf50">Boolean</span>) = customers.filter(f) 
+}
+
+<span style="color:#e28964">new</span> <span style="color:#89bdff">FilterCustomer</span>(customers)
+  .filter(customer => customer.name == <span style="color:#65b042">"paul"</span>)
+</pre>					
 				</section>
 				<section>
 					<h2>Summary</h2>
